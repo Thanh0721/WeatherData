@@ -1,22 +1,54 @@
-public class WeatherData
+import java.util.ArrayList;
+
+public class WeatherData 
 {
-    /** Guaranteed not to be null and to contain only non-null entries */
     private ArrayList<Double> temperatures;
 
-    /**
-    * Cleans the data by removing from temperatures all values that are less than
-    * lower and all values that are greater than upper, as described in part (a)
-    */
-    public void cleanData(double lower, double upper)
-    { /* to be implemented in part (a) */ }
+    public WeatherData(ArrayList<Double> temperatures) 
+    {
+        this.temperatures = new ArrayList<>(temperatures);
+    }
 
-    /**
-    * Returns the length of the longest heat wave found in temperatures, as described in
-    * part (b)
-    * Precondition: There is at least one heat wave in temperatures based on threshold.
-    */
-    public int longestHeatWave(double threshold)
-    { /* to be implemented in part (b) */ }
-    
-    // There may be instance variables, constructors, and methods that are not shown.
+    public void cleanData(double lower, double upper) 
+    {
+        for (int i = 0; i < temperatures.size(); i++) 
+        {
+            double temp = temperatures.get(i);
+            if (temp < lower || temp > upper) 
+            {
+                temperatures.remove(i);
+                i--;
+            }
+        }
+    }
+
+    public int longestHeatWave(double threshold) 
+    {
+        int currentHeatWave = 0;
+        int longestHeatWave = 0;
+
+        for (double temp : temperatures) 
+        {
+            if (temp > threshold) 
+            {
+                currentHeatWave++;
+                if (currentHeatWave > longestHeatWave) 
+                {
+                    longestHeatWave = currentHeatWave;
+                }
+            } 
+            
+            else 
+            {
+                currentHeatWave = 0;
+            }
+        }
+        return longestHeatWave;
+    }
+
+    @Override
+    public String toString() 
+    {
+        return "Temperatures: " + temperatures;
+    }
 }
